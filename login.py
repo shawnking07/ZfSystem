@@ -16,7 +16,7 @@ def login(username, password, url):
     # im.show()
     # secret_code = input("input the secret code: ")
     secret_code = load_predict(im)
-    params = {
+    payload = {
         '__VIEWSTATE': view_state,
         'txtUserName': username,
         'Textbox1': "",
@@ -25,7 +25,7 @@ def login(username, password, url):
         'RadioButtonList1': "%D1%A7%C9%FA",
         'Button1': ""
     }
-    r = session.post(url + "default2.aspx", data=params)
+    r = session.post(url + "default2.aspx", data=payload)
     # print(r.text)
     d = pq(r.text)
     name = d("#xhxm").html()
@@ -35,7 +35,7 @@ def login(username, password, url):
 
 def s_login(username, password, url, max_times):
     i = 0
-    while i<max_times:
+    while i < max_times:
         try:
             i += 1
             return login(username, password, url)

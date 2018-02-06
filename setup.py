@@ -156,5 +156,5 @@ setup(
     license='',
     author='shawn',
     author_email='',
-    description=''
+    description='', install_requires=['Pillow', 'numpy', 'requests', 'pyquery', 'scikit-learn']
 )

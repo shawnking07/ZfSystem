@@ -16,7 +16,7 @@ def query_score(uid, password, url):
     d = pq(r.text)
     view_state = d("input[name='__VIEWSTATE']").val()
     headers['Referer'] = new_url
-    params = {
+    payload = {
         '__EVENTTARGET': '',
         '__EVENTARGUMENT': '',
         '__VIEWSTATE': view_state,
@@ -26,7 +26,7 @@ def query_score(uid, password, url):
         'ddlXQ': '',
         'ddl_kcxz': ''
     }
-    r = session.post(new_url, headers=headers, data=params)
+    r = session.post(new_url, headers=headers, data=payload)
     r.encoding = "gb2312"
     d = pq(r.text)
     # print(r.text)
@@ -38,31 +38,4 @@ def query_score(uid, password, url):
         data_list.append(subject_data)
     del data_list[0]
     # print(data_list)
-
-    # 计算均分
-    score_sum = 0
-    weight_sum = 0
-    weight_score_sum = 0
-    for i in data_list:
-        print(i['name']+" "+i['score']+" "+i['weight'])
-        if i['score'] == "优秀":
-            score = 90
-        elif i['score'] == '良好':
-            score = 80
-        elif i['score'] == "中等":
-            score = 70
-        elif i['score'] == "合格":
-            score = 60
-        else:
-            score = int(i['score'])
-        weight = float(i['weight'])
-        score_sum += score
-        weight_sum += weight
-        weight_score_sum += score * weight
-    w_avg = weight_score_sum / weight_sum
-    avg = score_sum / len(data_list)
-
-    print("加权平均： ")
-    print(w_avg)
-    print("算术平均: ")
-    print(avg)
+    return data_list
